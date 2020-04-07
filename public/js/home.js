@@ -29,19 +29,25 @@ $(document).ready(function () {
     $('#submit').click(function () {
       var name = $('#name').val();
       var number = $('#number').val();
-      $('#name').val('');
-      $('#number').val('');
       
-      $.get('/add', {name: name, number: number}, function(result){
-        $('#contacts').append('<div class="contact">' + 
-        '<img src="/images/icon.webp" class="icon">' +
-        '<div class="info">' +
-        '<p class="text">' + result.name + '</p>' +
-        '<p class="text">' + result.number + '</p>' +
-        '</div>' +
-        '<button class="remove"> X </button>' + 
-        '</div>');
-      });
+      if (name != '' && number != ''){
+        // $.get('/add', {name: name, number: number}, function(result){
+        //   $('#contacts').append('<div class="contact">' + 
+        //   '<img src="/images/icon.webp" class="icon">' +
+        //   '<div class="info">' +
+        //   '<p class="text">' + result.name + '</p>' +
+        //   '<p class="text">' + result.number + '</p>' +
+        //   '</div>' +
+        //   '<button class="remove"> X </button>' + 
+        //   '</div>');
+        // });
+        $.get('/add', {name: name, number: number}, function(result){
+          $('#contacts').append(result);
+        })
+        
+        $('#name').val('');
+        $('#number').val('');
+      }
     });
 
     /*

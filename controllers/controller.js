@@ -42,7 +42,9 @@ const controller = {
       var number = req.query.number;
       db.insertOne(User, {name: name, number: number}, function(result){
         if (result)
-          res.send({name: name, number: number});
+          res.render('partials/card', {name: name, number: number}, function(err, html){
+            res.send(html);
+          })
       });
     },
 
@@ -54,7 +56,8 @@ const controller = {
       var name = req.query.name;
       var number = req.query.number;
       db.deleteOne(User, {name: name, number: number}, function(result){
-        res.send({name: name, number: number});
+        if (result)
+          res.send({name: name, number: number});
       });
     }
 
