@@ -45,14 +45,18 @@ $(document).ready(function () {
     });
 
     /*
-    TODO:   The code below attaches a `click` event to `.remove` buttons
-            inside the `<div>` `#contacts`.
-            The code deletes the specific contact associated to the
-            specific `.remove` button, then removes the its parent `<div>` of
-            class `.contact`.
+      Deletes the specific contact associated to the
+      specific `.remove` button from the database
+      then removes the its parent `<div>` of
+      class `.contact`.
     */
     $('#contacts').on('click', '.remove', function () {
-        // your code here
+      var name = $(this).prev().children().first().text().trim();
+      var number = $(this).prev().children().last().text().trim();
+      var toDelete = $(this);
+      $.get('/delete', {name: name, number: number}, function(result){
+        toDelete.parent().remove();
+      })
     });
 
 })

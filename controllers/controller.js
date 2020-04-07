@@ -47,13 +47,15 @@ const controller = {
     },
 
     /*
-    TODO:   This function is executed when the client sends an HTTP GET
-            request to path `/getDelete`. This function deletes the contact
-            from the database, then removes the contact to the list of
-            contacts in `home.hbs`.
+      Executed when the client sends an HTTP GET request to path `/getDelete`. 
+      Deletes the contact from the database and also the rendered list.
     */
     getDelete: function (req, res) {
-        // your code here
+      var name = req.query.name;
+      var number = req.query.number;
+      db.deleteOne(User, {name: name, number: number}, function(result){
+        res.send({name: name, number: number});
+      });
     }
 
 }
