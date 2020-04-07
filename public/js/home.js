@@ -19,19 +19,22 @@ $(document).ready(function () {
         // your code here
     });
 
-    /*
-    TODO:   The code below attaches a `click` event to `#submit` button.
-            The code checks if both text fields are not empty. The code
-            should communicate asynchronously with the server to save
-            the information in the database.
-
-            The new contact should be displayed immediately, and without
-            refreshing the page, after the values are saved in the database.
-
-            The name and the number fields are reset to empty values.
-    */
     $('#submit').click(function () {
-        // your code here
+      var name = $('#name').val();
+      var number = $('#number').val();
+      $('#name').val('');
+      $('#number').val('');
+      
+      $.get('/add', {name: name, number: number}, function(result){
+        $('#contacts').append('<div class="contact">' + 
+        '<img src="/images/icon.webp" class="icon">' +
+        '<div class="info">' +
+        '<p class="text">' + result.name + '</p>' +
+        '<p class="text">' + result.number + '</p>' +
+        '</div>' +
+        '<button class="remove"> X </button>' + 
+        '</div>');
+      });
     });
 
     /*

@@ -31,13 +31,17 @@ const controller = {
     },
 
     /*
-    TODO:   This function is executed when the client sends an HTTP GET
-            request to path `/getAdd`. This function adds the contact sent
-            by the client to the database, then appends the new contact to the
-            list of contacts in `home.hbs`.
+      executed when the client sends an HTTP GET request to path `/getAdd`. 
+      inserts the request's name and number into the user database after and
+      sends back the name and number to be rendered into the list.
     */
     getAdd: function(req, res) {
-      // your code here
+      var name = req.query.name;
+      var number = req.query.number;
+      db.insertOne(User, {name: name, number: number}, function(result){
+        if (result)
+          res.send({name: name, number: number});
+      });
     },
 
     /*
