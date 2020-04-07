@@ -1,24 +1,31 @@
 $(document).ready(function () {
 
     /*
-    TODO:   The code below attaches a `keyup` event to `#number` text field.
-            The code checks if the current number entered by the user in the
-            text field does not exist in the database.
-
-            If the current number exists in the database:
-            - `#number` text field background color turns to red
-            - `#error` displays an error message `Number already registered`
-            - `#submit` is disabled
-
-            else if the current number does not exist in the database:
-            - `#number` text field background color turns back to `#E3E3E3`
-            - `#error` displays no error message
-            - `#submit` is enabled
+      Handles checking if number in input is already in database
+      prevents user from inputting that number if it's already in the
+      collection
     */
     $('#number').keyup(function () {
-        // your code here
+      var number = $('#number').val();
+
+      $.get('/getCheckNumber', {number: number}, function(result){
+        if (result.number == number){
+          $('#number').css('background-color', 'red');
+          $('#error').text('Number already registered');
+          $('#submit').prop('disabled', true);
+        }
+        else {
+          $('#number').css('background-color', '#E3E3E3');
+          $('#error').text('');
+          $('#submit').prop('disabled', false);
+        }
+      })
     });
 
+    /*
+      Inserts the name and number into the database as well as render
+      the inserted name and number into the contacts list
+    */
     $('#submit').click(function () {
       var name = $('#name').val();
       var number = $('#number').val();

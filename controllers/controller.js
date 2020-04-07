@@ -8,8 +8,8 @@ const controller = {
     },
 
     /*
-     renders all contacts when client sends an HTTP GET request
-     to '/getIndex'.
+      Renders all contacts when client sends an HTTP GET request
+      to '/getIndex'.
     */
     getIndex: function(req, res) {
       db.findMany(User, {}, 'name number', function(users){
@@ -20,18 +20,20 @@ const controller = {
     },
 
     /*
-    TODO:   This function is executed when the client sends an HTTP GET
-            request to path `/getCheckNumber`. This function checks if a
-            specific number is stored in the database. If the number is
-            stored in the database, it returns an object containing the
-            number, otherwise, it returns an empty string.
+      Executed when the client sends an HTTP GET request to path `/getCheckNumber`.
+      return's the request's number back if it's found in user database, empty string
+      otherwise
     */
     getCheckNumber: function(req, res) {
-        // your code here
+      var number = req.query.number;
+
+      db.findOne(User, {number: number}, 'number', function(result){
+        res.send(result);
+      });
     },
 
     /*
-      executed when the client sends an HTTP GET request to path `/getAdd`. 
+      Executed when the client sends an HTTP GET request to path `/getAdd`. 
       inserts the request's name and number into the user database after and
       sends back the name and number to be rendered into the list.
     */
