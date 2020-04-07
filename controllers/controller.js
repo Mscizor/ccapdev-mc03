@@ -8,13 +8,15 @@ const controller = {
     },
 
     /*
-    TODO:   This function is executed when the client sends an HTTP GET
-            request to path `/`. This displays `home.hbs` with all contacts
-            current stored in the database.
+     renders all contacts when client sends an HTTP GET request
+     to '/getIndex'.
     */
     getIndex: function(req, res) {
-        // your code here
-        res.render('home'); // This is to load the page initially
+      db.findMany(User, {}, 'name number', function(users){
+        res.render('home', {
+          users: users
+        });
+      });
     },
 
     /*
@@ -35,7 +37,7 @@ const controller = {
             list of contacts in `home.hbs`.
     */
     getAdd: function(req, res) {
-        // your code here
+      // your code here
     },
 
     /*
